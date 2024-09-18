@@ -19,20 +19,39 @@ export const login = async (req, res) => {
 
 export const register = async (req, res) => {
     try{
-        const { first_name, last_name, email, age, rol, password } = req.body
+        const { first_name, last_name, email, age, role, password } = req.body
         const newUser = {
             first_name,
             last_name,
             email,
-            rol,
+            role,
             age,
             password: createHash(password)
         }
-
+        
         const user = await UserModel.create(newUser)
-        return res.status(201).json({message: `Usuario creado -> ${user.nombre}`, })
+        return res.status(201).json({message: `Usuario creado -> ${user.first_name}`, })
 
     }catch(e){
         return res.status(500).json({message: "Error al crear usuario. ", e})
     }
+}
+
+export const recoverPw = async (req, res) => {
+    const { email, password } = req.body
+    
+    if(!email || !password) return res.status(400).json({message: "Datos inexistentes o inválidos"})
+    try{
+        const userFound = await UserModel.findOne({email}).lean()
+        console.log("User found: ",userFound._id, "--", userFound.password);
+        if(!userFound) return res.status(404).json({message: 'Usuario no encontrado.'})
+        
+        userFound.password = createHash(password)
+        await UserModel.updateOne({_id: userFound._id}, userFound).lean()
+        res.status(200).json({message: "Contraseña actualizada."})
+        
+    }catch (e){
+        return res.status(500).json({message: "Error al generar nueva contraseña. ", e})
+    }
+
 }

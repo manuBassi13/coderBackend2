@@ -10,9 +10,7 @@ const newUser = {
     last_name: "",
     email: "",
     age: "",
-    password: "",
-    cart: "",
-    role: ""
+    password: ""
 }
 
 const handleChange = (e) => {
@@ -27,6 +25,8 @@ emailInput.addEventListener("input", handleChange)
 passwordInput.addEventListener("input", handleChange)
 
 buttonRegister.addEventListener("click", async () => {
+    console.log(newUser);
+    
     try{
         const response = await fetch("/api/sessions/register", {
             method: "POST",

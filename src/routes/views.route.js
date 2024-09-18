@@ -18,7 +18,7 @@ app.get('/login', (req, res) => {
     if(!req.signedCookies.currentUser){
         return res.render('login')
     }
-    return res.redirect('/current')
+    return res.redirect('/profile')
 })
 
 app.get('/current', (req, res) => {
@@ -29,14 +29,14 @@ app.get('/current', (req, res) => {
 })
 
 app.get('/profile', invokePassport('jwt'), (req, res) => {
-    console.log(req.user.email)
     const user = req.user
+    if(req.signedCookies.currentUser){
+        return res.render('profile', {user})
+    }
+    return res.redirect('/login')
     //const user = req.signedCookies.currentUser
     //console.log(user);
-    
     //const isLog = req.session.isLog
-    
-    res.render('profile',{user})
 })
 
 app.get('/recoverPw', (req, res) => {
