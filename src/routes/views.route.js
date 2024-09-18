@@ -1,5 +1,6 @@
 import { Router } from "express"
 import { isAuth, isLog } from "../middlewares/protectedRoutes.js"
+import { invokePassport } from "../middlewares/handleError.js"
 
 const app = Router()
 
@@ -27,11 +28,15 @@ app.get('/current', (req, res) => {
     return res.redirect('/login')
 })
 
-app.get('/profile', isAuth, (req, res) => {
-    const user = req.session.user
-    const isLog = req.session.isLog
+app.get('/profile', invokePassport('jwt'), (req, res) => {
+    console.log(req.user.email)
+    const user = req.user
+    //const user = req.signedCookies.currentUser
+    //console.log(user);
     
-    res.render('profile', {user, isLog})
+    //const isLog = req.session.isLog
+    
+    res.render('profile',{user})
 })
 
 app.get('/recoverPw', (req, res) => {
