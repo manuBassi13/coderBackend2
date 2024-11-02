@@ -1,6 +1,6 @@
 import passport from 'passport'
 import jwt, { ExtractJwt } from 'passport-jwt'
-import { UserModel } from '../models/user.model.js'
+import { UserModel } from '../dao/models/user.model.js'
 import { getJWTCookie } from '../utils.js'
 
 const JWTStrategy = jwt.Strategy

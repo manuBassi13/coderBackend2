@@ -1,11 +1,15 @@
 import { Router } from "express"
 import { ROUTE_PATH } from '../constants/routesPath.js'
-import ViewRouter from './views.route.js'
 import SessionRouter from './session.route.js'
+import UserRouter from './user.route.js'
+import ProductRouter from './product.route.js'
+import CartRouter from './cart.route.js'
 
 const app = Router()
 
-app.use(ROUTE_PATH.view, ViewRouter)
-app.use(ROUTE_PATH.api_session, SessionRouter)
+app.use(ROUTE_PATH.sessions, SessionRouter)
+app.use(ROUTE_PATH.users, UserRouter)
+app.use(ROUTE_PATH.products, ProductRouter)
+app.use(ROUTE_PATH.carts, CartRouter)
 
 export default app
