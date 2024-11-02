@@ -1,4 +1,6 @@
 /node_modules
 .env
-/src/models/product.model.js
-/src/models/cart.model.js
+/src/dao/models/product.model.js
+/src/dao/models/cart.model.js
+/src/views
+/src/public/js
