@@ -18,6 +18,14 @@ export const getUserById = async (req, res) => {
     res.status(200).json({message:'Usuario encontrado', payload: userFound})
 }
 
+export const getUserByEmail = async (req, res) => {
+    const { email } = req.params
+    const userFound = await UserService.getUserByEmail(email)
+    if(!userFound) return res.status(500).json({message: 'Usuario no encontrado'})
+
+    res.status(200).json({message:'Usuario encontrado', payload: userFound})
+}
+
 export const createUser = async (req, res) => {
     const user = req.body
     const newUser = {
@@ -34,17 +42,20 @@ export const createUser = async (req, res) => {
     res.status(201).json({message: `Usuario creado -> ${userResult.first_name}`, })
 }
 
+
 export const updateUser = async (req, res) => {
     const user = req.body
     const {uid} = req.params
     const userFound = await UserService.getUserById(uid)
     if(!userFound) return res.status(500).json({message: 'Usuario no encontrado'})
-
+        console.log(user);
+        
     const userUpdated = {
         ...userFound,
         ...user,
         password: user.password ? createHash(user.password) : userFound.password
     }
+    console.log(userUpdated);
     
     await UserService.updateUser(userFound._id, userUpdated)
     res.status(200).json({message: "Usuario actualizado.", payload: userUpdated})

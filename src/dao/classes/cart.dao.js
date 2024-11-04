@@ -38,5 +38,13 @@ export default class Cart {
         }
     }
 
+    resolveCart = async (resolution) => {
+        try{
+            return true
+        }catch(e){
+            console.log(e);
+            return null
+        }
+    }
 
 }

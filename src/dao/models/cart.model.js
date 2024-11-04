@@ -3,6 +3,13 @@ import mongoose, { Schema } from "mongoose";
 const cartCollection = 'carts'
 
 const cartSchema = new Schema({
+    code: Number,
+    user:{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'users'
+    },
+    status: String,
+    purchase_datetime: Date,
     products: {
         default: [],
         type: [{
@@ -12,10 +19,11 @@ const cartSchema = new Schema({
             },
             quantity: {
                 type: Number,
-                default: 0
+                default: 1
             }
         }]
-    }
+    },
+    amount: Number
 })
 
 export const CartModel = mongoose.model(cartCollection, cartSchema)

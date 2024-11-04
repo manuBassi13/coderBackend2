@@ -1,11 +1,10 @@
 import { ProductModel } from "../models/product.model.js"
 
-
 export default class Product {
     
     getProducts = async () => {
         try{
-            return await ProductModel.find()
+            return await ProductModel.find().populate('categories.category')
         } catch (e){
             console.log(e);
             return null
@@ -14,8 +13,26 @@ export default class Product {
 
     getProductById = async (id) => {
         try{
-            return await ProductModel.findOne({_id: id})
+            return await ProductModel.findOne({_id: id},{'categories._id':0}).populate('categories.category')
         } catch (e){
+            console.log(e);
+            return null
+        }
+    }
+
+    getProductByCode = async (code) => {
+        try{
+            return await ProductModel.findOne({code: code}).populate('categories.category')
+        } catch (e){
+            console.log(e);
+            return null
+        }
+    }
+
+    getProductList = async (pids) => {
+        try{
+            return await ProductModel.find({'_id':{$in: pids}})
+        }catch(e){
             console.log(e);
             return null
         }
@@ -32,6 +49,9 @@ export default class Product {
 
     updateProduct = async (id, product) => {
         try{
+
+            console.log("llegue?",product);
+            
             return await ProductModel.updateOne({_id: id}, {$set: product}, {new: true})
         } catch (e){
             console.log(e);

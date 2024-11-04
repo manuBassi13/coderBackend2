@@ -22,6 +22,8 @@ export default class User {
 
     getUserByEmail = async (mail) => {
         try{
+            console.log(mail);
+            
             return await UserModel.findOne({email: mail}).lean()
         } catch (e){
             console.log(e);

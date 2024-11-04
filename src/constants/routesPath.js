@@ -3,6 +3,6 @@ export const ROUTE_PATH = {
     sessions: '/api/sessions',
     users: '/api/users',
     products: '/api/products',
-    carts: '/api/carts'
-
+    carts: '/api/carts',
+    categories: '/api/categories'
 }

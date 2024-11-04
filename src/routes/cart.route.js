@@ -1,12 +1,15 @@
 import { Router } from "express";
 import * as CartController from "../controllers/carts.controller.js"
+import { invokePassport } from "../middlewares/handleError.js";
+import { handleAuth } from "../middlewares/handleAuth.js";
 
 const route = Router()
 
-route.get('/', )
-route.post('/', )
-route.get('/:cid', )
-route.post('/:cid', )
+route.get('/', CartController.getCarts)
+route.post('/', invokePassport('jwt'), handleAuth('user'), CartController.createCart)
+route.get('/:cid', CartController.getCartById)
+route.post('/:cid', CartController.updateCart)
+route.post('/:cid/purchase', CartController.resolveCart)
 
 
 

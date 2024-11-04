@@ -7,6 +7,7 @@ const route = Router()
 route.get('/', UserController.getUsers)
 route.post('/', UserController.createUser)
 route.get('/:uid', UserController.getUserById)
+route.get('/email/:email', UserController.getUserByEmail)
 route.post('/:uid', UserController.updateUser)
 
 route.post('/recoverPw', UserController.recoverPw)
