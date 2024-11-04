@@ -6,7 +6,7 @@ import { handleAuth } from "../middlewares/handleAuth.js";
 const route = Router()
 
 route.get('/', CartController.getCarts)
-route.post('/', invokePassport('jwt'), handleAuth('user'), CartController.createCart)
+route.post('/', CartController.createCart)
 route.get('/:cid', CartController.getCartById)
 route.post('/:cid', CartController.updateCart)
 route.post('/:cid/purchase', CartController.resolveCart)

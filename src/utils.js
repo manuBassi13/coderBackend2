@@ -15,9 +15,16 @@ export const generadorToken = (user) =>{
     return token
 }
 
+export const destroyToken = (token) => {
+    const result = jwt.destroy(token)
+    console.log();
+    
+    return result
+}
+
 export const getJWTCookie = (req) => {
     let token = null
-    if(req.signedCookies){
+    if(!req.signedCookies){
         token = req.signedCookies['currentUser']
     }
     return token

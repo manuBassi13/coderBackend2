@@ -24,30 +24,26 @@ export const getCartById = async (req, res) => {
 export const createCart = async (req, res) => {
     const {uid, products} = req.body
     const resultUser = await UserService.getUserById(uid)
-    console.log(resultUser);
     if(!resultUser) return res.status(500).json({message:'Usuario no encontrado'})
     console.log(...products);
-    
-    let actualCart = await ProductService.getProductList(products)
-    console.log(actualCart);
+    let pids = products.map(products => products.product)
+    let actualCart = await ProductService.getProductList(pids)
+    console.log("actualCart: ",actualCart);
     let sum = actualCart.reduce((acc, prev) => {
         acc += prev.price
         return acc
     }, 0)
-    let orderNumber = Date.now() + Math.floor(Math.random()*10000+1)
-    let date = new Date().toJSON()
-    const order = {
-        code: orderNumber,
+    
+    const cart = {
         purchaser: resultUser.email,
-        purchase_datetime: date,
         status: 'pending',
-        products: actualCart.map(product => product.title),
+        products: actualCart.map(product => ({title: product.title, price: product.price})),
         amount: sum
     }
-    console.log(order);
+    console.log(cart);
     
 
-    return res.status(200).json({payload: order})
+    return res.status(200).json({payload: cart})
 
 }
 
@@ -77,5 +73,5 @@ export const resolveCart = async (req, res) => {
     }
     console.log(order);
 
-
+    return res.status(200).json({payload: order})
 }
