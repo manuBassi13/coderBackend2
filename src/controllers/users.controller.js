@@ -1,4 +1,5 @@
 import User from "../dao/classes/user.dao.js"
+import { UserSensitiveDataDTO } from "../dto/user.dto.js";
 import { createHash } from "../utils.js";
 
 const UserService = new User()
@@ -15,7 +16,8 @@ export const getUserById = async (req, res) => {
     const userFound = await UserService.getUserById(uid)
     if(!userFound) return res.status(500).json({message: 'Usuario no encontrado'})
 
-    res.status(200).json({message:'Usuario encontrado', payload: userFound})
+    const userData = new UserSensitiveDataDTO(userFound)
+    res.status(200).json({message:'Usuario encontrado', payload: userData})
 }
 
 export const getUserByEmail = async (req, res) => {

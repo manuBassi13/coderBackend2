@@ -1,5 +1,6 @@
 import User from "../dao/classes/user.dao.js"
-import { createHash, generadorToken, isValidPassword, destroyToken,  getJWTCookie} from "../utils.js";
+import { createHash, generadorToken, isValidPassword, destroyToken} from "../utils.js";
+
 
 const UserService = new User()
 
@@ -14,7 +15,7 @@ export const login = async (req, res) => {
                 
         if(isValidPassword(userFound, password)){
             const token = generadorToken({ email: userFound.email, first_name: userFound.first_name, role: userFound.role })
-            return res.status(200).cookie('currentUser', token, {maxAge: 60000, signed: true, httpOnly: true}).json({message: 'Login Ok. ', token})
+            return res.status(200).cookie('currentUser', token, {maxAge: 600000, signed: true, httpOnly: true}).json({message: 'Login Ok. ', token})
         }
         return res.status(401).json({message: '2Error en el login. User o Pass incorrectos'})
     } catch(e) {

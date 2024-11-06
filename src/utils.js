@@ -24,7 +24,7 @@ export const destroyToken = (token) => {
 
 export const getJWTCookie = (req) => {
     let token = null
-    if(!req.signedCookies){
+    if(req.signedCookies){
         token = req.signedCookies['currentUser']
     }
     return token
