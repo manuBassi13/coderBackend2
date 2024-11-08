@@ -21,14 +21,21 @@ export const getCartById = async (req, res) => {
     res.status(200).json({message:'Carrito encontrado', payload: cartFound})
 }
 
+
 export const createCart = async (req, res) => {
     const {uid, products} = req.body
     const resultUser = await UserService.getUserById(uid)
-    if(!resultUser) return res.status(500).json({message:'Usuario no encontrado'})
+    if(!resultUser) return res.status(500).json({message:'Usuario no encontrado'}) 
+    
     console.log(...products);
+    
     let pids = products.map(products => products.product)
+    //console.log(pids);
+    
     let actualCart = await ProductService.getProductList(pids)
+
     console.log("actualCart: ",actualCart);
+    
     let sum = actualCart.reduce((acc, prev) => {
         acc += prev.price
         return acc
