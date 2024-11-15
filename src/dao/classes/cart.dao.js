@@ -4,7 +4,7 @@ export default class Cart {
     
     getCarts = async () => {
         try{
-            return await CartModel.find()
+            return await CartModel.find().populate('products.product')
         } catch (e){
             console.log(e);
             return null
@@ -13,7 +13,7 @@ export default class Cart {
 
     getCartById = async (id) => {
         try{
-            return await CartModel.findOne({_id: id})
+            return await CartModel.findOne({_id: id}).populate('products.product')
         } catch (e){
             console.log(e);
             return null

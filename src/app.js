@@ -6,6 +6,5 @@ AppInit(app)
 
 const port = process.env.PORT
 app.listen(port, () => {
-    console.log('Servidor en ', port);
-    
+    console.log('Servidor en ', port);    
 })
