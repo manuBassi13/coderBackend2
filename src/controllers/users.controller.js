@@ -1,6 +1,7 @@
 import User from "../dao/classes/user.dao.js"
 import { UserSensitiveDataDTO } from "../dto/user.dto.js";
-import { createHash } from "../utils.js";
+import { createHash } from "../utils/utils.js";
+import { logger } from "../utils/logger.js"
 
 const UserService = new User()
 
@@ -14,7 +15,10 @@ export const getUsers = async (req, res) => {
 export const getUserById = async (req, res) => {
     const { uid } = req.params
     const userFound = await UserService.getUserById(uid)
-    if(!userFound) return res.status(500).json({message: 'Usuario no encontrado'})
+    if(!userFound){
+        logger.warning('Usuario no encontrado con id ', uid)
+        return res.status(500).json({message: 'Usuario no encontrado'})
+    } 
 
     const userData = new UserSensitiveDataDTO(userFound)
     res.status(200).json({message:'Usuario encontrado', payload: userData})
@@ -23,7 +27,10 @@ export const getUserById = async (req, res) => {
 export const getUserByEmail = async (req, res) => {
     const { email } = req.params
     const userFound = await UserService.getUserByEmail(email)
-    if(!userFound) return res.status(500).json({message: 'Usuario no encontrado'})
+    if(!userFound) {
+        logger.warning('Usuario no encontrado con email ', email)
+        return res.status(500).json({message: 'Usuario no encontrado'})
+    } 
 
     res.status(200).json({message:'Usuario encontrado', payload: userFound})
 }
@@ -49,8 +56,10 @@ export const updateUser = async (req, res) => {
     const user = req.body
     const {uid} = req.params
     const userFound = await UserService.getUserById(uid)
-    if(!userFound) return res.status(500).json({message: 'Usuario no encontrado'})
-        console.log(user);
+    if(!userFound){
+        logger.warning('Usuario no encontrado con id ',uid)
+        return res.status(500).json({message: 'Usuario no encontrado'})
+    } 
         
     const userUpdated = {
         ...userFound,
@@ -69,8 +78,10 @@ export const recoverPw = async (req, res) => {
     if(!email || !password) return res.status(400).json({message: "Datos inexistentes o inválidos"})
     try{
         const userFound = await UserService.getUserByEmail(email)
-        if(!userFound) return res.status(404).json({message: 'Usuario no encontrado.'})
-        
+        if(!userFound){
+            logger.warning('Usuario no encontrado con email ', email)
+            return res.status(404).json({message: 'Usuario no encontrado.'})
+        }
         userFound.password = createHash(password)
         await UserService.updateUser(userFound._id, userFound)
         res.status(200).json({message: "Contraseña actualizada."})

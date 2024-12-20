@@ -15,7 +15,7 @@ export default class Product {
         try{
             return await ProductModel.findOne({_id: id},{'categories._id':0}).populate('categories.category')
         } catch (e){
-            console.log(e);
+            console.log("p find by id error:", e);
             return null
         }
     }
@@ -47,6 +47,7 @@ export default class Product {
         }
     }
 
+    
     updateProduct = async (id, product) => {
         try{
 

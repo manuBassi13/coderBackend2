@@ -8,5 +8,4 @@ route.post('/', CategoryController.createCategory)
 route.get('/:catid', )
 route.post('/:catid', )
 
-
 export default route

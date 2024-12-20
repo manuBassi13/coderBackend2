@@ -4,5 +4,6 @@ export const ROUTE_PATH = {
     users: '/api/users',
     products: '/api/products',
     carts: '/api/carts',
-    categories: '/api/categories'
+    categories: '/api/categories',
+    documentation: '/api/documentation'
 }

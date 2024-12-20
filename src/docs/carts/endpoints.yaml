@@ -1,0 +1,193 @@
+paths:
+  /api/carts/:
+    get:
+      summary: Obtener todos los carritos
+      tags:
+        - Carts
+      responses:
+        "200":
+          description: "Se obtuvieron todos los carritos"
+          content:
+            application/json:
+              type: Array
+              schema:
+                $ref: "#/components/schemas/Carts"
+        "500":
+          description: "Ocurrio un error a nivel de base de datos"
+    post:
+      summary: Crear un carrito
+      tags:
+        - Carts
+      requestBody:
+        require: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/requestBodies/createCart"
+      responses:
+        "200":
+          description: "Carrito creado"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Carts"
+        "500":
+          description: "Ocurrio un error al crear carrito"
+  /api/carts/{cid}:
+    get:
+      summary: Obtener un carrito
+      tags:
+        - Carts
+      parameters:
+        - name: cid
+          in: path
+          required: true
+          description: id del carrito
+          schema:
+            $type: String
+      responses:
+        "200":
+          description: "Carrito encontrado"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Carts"
+        "500":
+          description: "Ocurrio un error a nivel de base de datos"
+    post:
+      summary: Actualizar un carrito
+      tags:
+        - Carts
+      parameters:
+        - name: cid
+          in: path
+          required: true
+          description: id del carrito
+          schema:
+            $type: String
+      requestBody:
+        required: true
+        content: 
+          application/json:
+            schema:
+              $ref: "#/components/requestBodies/updateCart"
+      responses:
+        "200":
+          description: "Carrito actualizado"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Carts"
+        "500":
+          description: "Ocurrio un error al actualizar el carrito"
+components:
+  schemas:
+    Carts:
+      type: object
+      properties:
+        _id:
+          type: ObjectId
+          description: id de mongo
+        code:
+          type: String
+          description: Código del carrito
+        user:
+          type: Object
+          description: Id del usuario
+          schema:
+            $ref: "#/components/schemas/Users"
+        status:
+          type: String
+          description: Estado del carrito
+        purchase_datetime:
+          type: Date
+          description: Fecha de compra
+        products:
+          type: Array
+          description: Productos del carrito
+          schema:
+            $ref: "#/components/schemas/Products"
+        amount:
+          type: Number
+          description: Total del carrito
+      example:
+        _id: ObjectId("156k8nk34jn5ff")
+        code: userId_cart_002
+        user: ObjectId("156k8nk34jn5ff")
+        status: Pendiente
+        purchase_datetime: 10/12/2024-10:06:23
+        products: {}
+        amount: 55650
+  requestBodies:
+    createCart:
+      type: object
+      properties:
+        _id:
+          type: ObjectId
+          description: id de mongo
+        code:
+          type: String
+          description: Código del carrito
+        user:
+          type: Object
+          description: Id del usuario
+          schema:
+            $ref: "#/components/schemas/Users"
+        status:
+          type: String
+          description: Estado del carrito
+        purchase_datetime:
+          type: Date
+          description: Fecha de compra
+        products:
+          type: Array
+          description: Productos del carrito
+          schema:
+            $ref: "#/components/schemas/Products"
+        amount:
+          type: Number
+          description: Total del carrito
+      example:
+        _id: ObjectId("156k8nk34jn5ff")
+        code: userId_cart_002
+        user: ObjectId("156k8nk34jn5ff")
+        status: Pendiente
+        purchase_datetime: 10/12/2024-10:06:23
+        products: {}
+        amount: 55650
+    updateCart:
+      type: object
+      properties:
+        _id:
+          type: ObjectId
+          description: id de mongo
+        code:
+          type: String
+          description: Código del carrito
+        user:
+          type: Object
+          description: Id del usuario
+          schema:
+            $ref: "#/components/schemas/Users"
+        status:
+          type: String
+          description: Estado del carrito
+        purchase_datetime:
+          type: Date
+          description: Fecha de compra
+        products:
+          type: Array
+          description: Productos del carrito
+          schema:
+            $ref: "#/components/schemas/Products"
+        amount:
+          type: Number
+          description: Total del carrito
+      example:
+        _id: ObjectId("156k8nk34jn5ff")
+        code: userId_cart_002
+        user: ObjectId("156k8nk34jn5ff")
+        status: Pendiente
+        purchase_datetime: 10/12/2024-10:06:23
+        products: {}
+        amount: 55650
