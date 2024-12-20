@@ -1,0 +1,236 @@
+paths:
+  /api/products/:
+    get:
+      summary: Obtener todos los productos
+      tags:
+        - Products
+      responses:
+        "200":
+          description: "Se obtuvieron todos los productos"
+          content:
+            application/json:
+              type: Array
+              schema:
+                $ref: "#/components/schemas/Products"
+        "500":
+          description: "Ocurrio un error a nivel de base de datos"
+    post:
+      summary: Crear un producto
+      tags:
+        - Products
+      requestBody:
+        require: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/requestBodies/createProduct"
+      responses:
+        "200":
+          description: "Producto creado"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Products"
+        "500":
+          description: "Ocurrio un error al crear producto"
+  /api/products/{pid}:
+    get:
+      summary: Obtener un producto
+      tags:
+        - Products
+      parameters:
+        - name: pid
+          in: path
+          required: true
+          description: id del producto
+          schema:
+            $type: String
+      responses:
+        "200":
+          description: "Producto encontrado"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Products"
+        "500":
+          description: "Ocurrio un error a nivel de base de datos"
+    put:
+      summary: Actualizar un producto
+      tags:
+        - Products
+      parameters:
+        - name: pid
+          in: path
+          required: true
+          description: id del producto
+          schema:
+            $type: String
+      requestBody:
+        required: true
+        content: 
+          application/json:
+            schema:
+              $ref: "#/components/requestBodies/updateProduct"
+      responses:
+        "200":
+          description: "Producto actualizado"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Products"
+        "500":
+          description: "Ocurrio un error al actualizar el producto"
+    delete:
+      summary: Eliminar un producto
+      tags:
+        - Products
+      parameters:
+        - name: pid
+          in: path
+          required: true
+          description: id del producto
+          schema:
+            $type: String
+      responses:
+        "200":
+          description: "Producto eliminado correctamente"
+        "500":
+          description: "Ocurrio un error al eliminar el producto"
+  /api/products/code/{code}:
+    get:
+      summary: Obtener un producto por código
+      tags:
+        - Products
+      parameters:
+        - name: code
+          in: path
+          required: true
+          description: codigo del producto
+          schema:
+            $type: String
+      responses:
+        "200":
+          description: "Producto encontrado"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Products"
+        "500":
+          description: "Ocurrio un error a nivel de base de datos"
+components:
+  schemas:
+    Products:
+      type: object
+      properties:
+        _id:
+          type: ObjectId
+          description: id de mongo
+        title:
+          type: String
+          description: Título del producto
+        code:
+          type: String
+          description: Código del producto
+        price:
+          type: Number
+          description: Precio del producto
+        status:
+          type: Boolean
+          description: Estado del producto
+        stock:
+          type: Number
+          description: Stock del producto
+        categories:
+          type: Object
+          description: Categorías del producto
+          schema:
+            $ref: "#/components/schemas/Products"
+        thumbnail:
+          type: String
+          description: Imagen del producto
+      example:
+        _id: ObjectId("156k8nk34jn5ff")
+        title: Azucar
+        code: azucar_001
+        price: 21000
+        status: true
+        stock: 123
+        categories: {}
+        thumbnail: ''
+  requestBodies:
+    createProduct:
+      type: object
+      properties:
+        _id:
+          type: ObjectId
+          description: id de mongo
+        title:
+          type: String
+          description: Título del producto
+        code:
+          type: String
+          description: Código del producto
+        price:
+          type: Number
+          description: Precio del producto
+        status:
+          type: Boolean
+          description: Estado del producto
+        stock:
+          type: Number
+          description: Stock del producto
+        categories:
+          type: Object
+          description: Categorías del producto
+          schema:
+            $ref: "#/components/schemas/Products"
+        thumbnail:
+          type: String
+          description: Imagen del producto
+      example:
+        _id: ObjectId("156k8nk34jn5ff")
+        title: Azucar
+        code: azucar_001
+        price: 21000
+        status: true
+        stock: 123
+        categories: {}
+        thumbnail: ''
+    updateProduct:
+      type: object
+      properties:
+        _id:
+          type: ObjectId
+          description: id de mongo
+        title:
+          type: String
+          description: Título del producto
+        code:
+          type: String
+          description: Código del producto
+        price:
+          type: Number
+          description: Precio del producto
+        status:
+          type: Boolean
+          description: Estado del producto
+        stock:
+          type: Number
+          description: Stock del producto
+        categories:
+          type: Object
+          description: Categorías del producto
+          schema:
+            $ref: "#/components/schemas/Products"
+        thumbnail:
+          type: String
+          description: Imagen del producto
+      example:
+        _id: ObjectId("156k8nk34jn5ff")
+        title: Azucar
+        code: azucar_001
+        price: 21000
+        status: true
+        stock: 123
+        categories: {}
+        thumbnail: ''

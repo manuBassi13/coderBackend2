@@ -1,0 +1,59 @@
+paths:
+  /api/categories/:
+    get:
+      summary: Obtener todas las categorías
+      tags:
+        - Categories
+      responses:
+        "200":
+          description: "Se obtuvieron todas las categorías"
+          content:
+            application/json:
+              type: Array
+              schema:
+                $ref: "#/components/schemas/Categories"
+        "500":
+          description: "Ocurrio un error a nivel de base de datos"
+    post:
+      summary: Crear una categoría
+      tags:
+        - Categories
+      requestBody:
+        require: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/requestBodies/createCategory"
+      responses:
+        "200":
+          description: "Categoría creada"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Categories"
+        "500":
+          description: "Ocurrio un error al crear categoría"
+components:
+  schemas:
+    Categories:
+      type: object
+      properties:
+        _id:
+          type: ObjectId
+          description: id de mongo
+        description:
+          type: String
+          description: Nombre de la categoría
+  requestBodies:
+    createCategory:
+      type: object
+      properties:
+        _id:
+          type: ObjectId
+          description: id de mongo
+        description:
+          type: String
+          description: Nombre de la categoría
+      example:
+        _id: ObjectId("156k8nk34jn5ff")
+        description: Almacén

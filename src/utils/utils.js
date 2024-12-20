@@ -30,16 +30,3 @@ export const getJWTCookie = (req) => {
     return token
 }
 
-// export const decodeToken = (req, res, next) => {
-//     const token = req.headers.authorization
-//     console.log(token);
-    
-//     if(!token) res.status(400).json({message: "Error token"})
-//         jwt.verify(token, process.env.SECRET, (err, userDecoded) =>{
-//             if(err) res.status(400).json({message: "error"})
-//             console.log(userDecoded);
-    
-//             req.user = userDecoded.user
-//             next()
-//         })
-// }

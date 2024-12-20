@@ -1,5 +1,5 @@
 import User from "../dao/classes/user.dao.js"
-import { createHash, generadorToken, isValidPassword, destroyToken} from "../utils.js";
+import { createHash, generadorToken, isValidPassword, destroyToken} from "../utils/utils.js";
 
 
 const UserService = new User()

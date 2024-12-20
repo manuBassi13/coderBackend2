@@ -1,0 +1,61 @@
+paths:
+  /api/sessions/login:
+    post:
+      summary: Loguear un usuario
+      tags:
+        - Sessions
+      requestBody:
+        require: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/requestBodies/loginUser"
+      responses:
+        "200":
+          description: "Usuario logueado"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Users"
+        "500":
+          description: "Ocurrio un error al iniciar sesión"
+  /api/sessions/logout:
+    post:
+      summary: Desloguear un usuario
+      tags:
+        - Sessions
+      requestBody:
+        require: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/requestBodies/logoutUser"
+      responses:
+        "200":
+          description: "Usuario deslogueado"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Users"
+        "500":
+          description: "Ocurrio un error al cerrar sesión"
+  /api/sessions/current:
+    get:
+      summary: Obtener usuario actual
+      tags:
+        - Sessions
+      requestBody:
+        require: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Users"
+      responses:
+        "200":
+          description: "Bienvenido"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Users"
+        "500":
+          description: "Ocurrio un error al obtener usuario"
