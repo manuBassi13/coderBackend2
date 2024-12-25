@@ -1,4 +1,8 @@
 
+DockerHub: docker pull manuc13/coderbackend2:1.0.0
+
+URL: https://hub.docker.com/r/manuc13/coderbackend2/tags
+
 
 #env file:
 
