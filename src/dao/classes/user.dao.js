@@ -49,5 +49,13 @@ export default class User {
         }
     }
 
+    deleteUser = async (id) => {
+            try{
+                return UserModel.deleteOne({_id: id})
+            } catch (e){
+                console.log(e);
+                return null
+            }
+        }
 
 }

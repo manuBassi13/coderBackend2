@@ -1,6 +1,7 @@
 import { dirname } from "node:path"
 import { fileURLToPath } from "node:url"
 import bcrypt from 'bcrypt'
+import { faker } from "@faker-js/faker";
 import jwt from 'jsonwebtoken'
 
 export const createHash = (pass) => bcrypt.hashSync(pass, bcrypt.genSaltSync(10))
@@ -30,3 +31,14 @@ export const getJWTCookie = (req) => {
     return token
 }
 
+export const generateUser = () => {
+    return{
+        first_name: faker.person.firstName(),
+        last_name: faker.person.lastName(),
+        email: faker.internet.email(),
+        age: faker.number.int({min:18, max:99}),
+        password: createHash('coder123'),
+        cart: [],
+        role: Math.random() < 0.5 ? 'user' : 'admin'
+    }
+}
