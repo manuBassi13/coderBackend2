@@ -90,3 +90,11 @@ export const recoverPw = async (req, res) => {
     }
 }
 
+export const deleteUser = async (req, res) => {
+    const { uid } = req.params
+    const userFound = await UserService.getUserById(uid)
+    if(!userFound) return res.status(500).json({message: 'Producto no encontrado'})
+
+    await UserService.deleteUser(uid)
+    res.status(200).json({message: "Usuario eliminado."})
+}
